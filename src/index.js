@@ -5,19 +5,22 @@ import DinoIpsum from './dino-ipsum.js';
 
 // Business Logic
 
-function getDinos(word) {
-  let promise = DinoIpsum.getDinos(word);
-  promise.then(function(dinoLoremIpsum) {
-    printElements(dinoLoremIpsum);
+function getDinos(wordNum) {
+  let promise = DinoIpsum.getDinos(wordNum);
+  promise.then(function(loremIpsum) {
+    printElements(loremIpsum);
   }, function(errorArray) {
     printError(errorArray);
   });
+  if (wordNum < 1) {
+    return window.alert("Please enter a positive number!");
+  }
 }
 
 // UI Logic
 
-function printElements() {
-  document.querySelector('#showResponse').innerText;
+function printElements(loremIpsum) {
+  document.querySelector('#showResponse').innerText = `${loremIpsum[0]} are all dinosaurs!`;
 }
 
 function printError(error) {
@@ -26,9 +29,9 @@ function printError(error) {
 
 function handleFormSubmission(event) {
   event.preventDefault();
-  const word = document.querySelector('#word').value;
-  document.querySelector('#paragraph').value = null;
-  getDinos(word);
+  const wordNum = document.querySelector('#wordNum').value;
+  document.querySelector('#wordNum').innerText = null;
+  getDinos(wordNum);
 }
 
 window.addEventListener("load", function() {
